@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager INSTANCE;
     public GameState currentGameState = GameState.MENU;
+    public int collectedObjects = 0;
     PlayerController playerController;
 
     void Awake() 
@@ -89,5 +90,10 @@ public class GameManager : MonoBehaviour
     {
         var mainCamera = GameObject.Find("Main Camera");
         mainCamera.GetComponent<CameraFollow>().ResetCameraPosition();
+    }
+
+    public void CollectObject(Collectable collectable)
+    {
+        collectedObjects += collectable.value;
     }
 }

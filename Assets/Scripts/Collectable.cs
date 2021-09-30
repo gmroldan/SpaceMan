@@ -11,9 +11,10 @@ public enum CollectableType {
 public class Collectable : MonoBehaviour
 {
     public CollectableType type = CollectableType.money;
-    private SpriteRenderer sprite;
-    private CircleCollider2D itemCollider;
-    private bool isCollected = false;
+    public int value = 1;
+    SpriteRenderer sprite;
+    CircleCollider2D itemCollider;
+    bool isCollected = false;
 
     void Awake() 
     {
@@ -42,6 +43,7 @@ public class Collectable : MonoBehaviour
         switch (this.type) 
         {
             case CollectableType.money:
+                GameManager.INSTANCE.CollectObject(this);
                 break;
             case CollectableType.healthPotion:
                 break;
@@ -66,7 +68,7 @@ public class Collectable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Destroy(gameObject);
+            Collect();
         }
     }
 }

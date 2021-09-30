@@ -19,7 +19,7 @@ public class GameView : MonoBehaviour
     {
         if (GameManager.INSTANCE.IsInGame())
         {
-            int coins = 0;
+            int coins = GameManager.INSTANCE.collectedObjects;
             float score = 0;
             float maxScore = 0;
 
