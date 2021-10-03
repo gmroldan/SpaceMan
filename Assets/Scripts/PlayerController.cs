@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public const int MAX_MANA = 30;
     const int MIN_HEALTH = 10;
     const int MIN_MANA = 0;
+    const int SUPER_JUMP_COST = 5;
+    const float SUPER_JUMP_FORCE = 1.5f;
     
     public float jumpForce = 6f;
     public float runningSpeed = 2f;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ActionJumpTriggered())
         {
-            Jump();
+            Jump(IsSuperJump());
         }
 
         animator.SetBool(STATE_ON_THE_GROUND, IsTouchingTheGround());
@@ -55,13 +57,28 @@ public class PlayerController : MonoBehaviour
     bool ActionJumpTriggered()
     {
         return GameManager.INSTANCE.IsInGame() 
-                && Input.GetButtonDown("Jump")
+                && (Input.GetButtonDown("Jump") || Input.GetButtonDown("Super Jump"))
                 && IsTouchingTheGround();
     }
 
-    void Jump() 
+    bool IsSuperJump()
     {
-        rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        return Input.GetButtonDown("Super Jump");
+    }
+
+    void Jump(bool superJump) 
+    {
+        float jumpForceFactor = jumpForce;
+
+        if (superJump 
+            && manaPoints >= SUPER_JUMP_COST)
+        {
+            manaPoints -= SUPER_JUMP_COST;
+            jumpForceFactor *= SUPER_JUMP_FORCE;
+        }
+
+
+        rigidBody.AddForce(Vector2.up * jumpForceFactor, ForceMode2D.Impulse);
     }
 
     void FixedUpdate() 
