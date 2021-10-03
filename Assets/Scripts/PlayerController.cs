@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     const string STATE_ON_THE_GROUND = "isOnTheGround";
     const int INITIAL_HEALTH = 100;
     const int INITIAL_MANA = 15;
-    const int MAX_HEALTH = 200;
-    const int MAX_MANA = 30;
+    public const int MAX_HEALTH = 200;
+    public const int MAX_MANA = 30;
     const int MIN_HEALTH = 10;
     const int MIN_MANA = 0;
     
