@@ -119,8 +119,20 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        UpdateMaxScore();
+
         animator.SetBool(STATE_ALIVE, false);
         GameManager.INSTANCE.GameOver();
+    }
+
+    void UpdateMaxScore()
+    {
+        float travelledDistance = GetTravelledDistance();
+        float maxScore = PlayerPrefs.GetFloat("maxScore", 0f);
+        if (travelledDistance > maxScore)
+        {
+            PlayerPrefs.SetFloat("maxScore", travelledDistance);
+        }
     }
 
     public void CollectHealth(int points)
@@ -151,5 +163,10 @@ public class PlayerController : MonoBehaviour
     public int GetMana()
     {
         return manaPoints;
+    }
+
+    public float GetTravelledDistance()
+    {
+        return this.transform.position.x - startPosition.x;
     }
 }
